@@ -313,7 +313,7 @@
   const PADDLE_W = 110;
   const PADDLE_H = 14;
   const PADDLE_Y = H - 40;
-  const BALL_R = 7;
+  const BALL_R = 9;
   const BASE_SPEED = 4.6;      // 基础球速
   const SPEED_PER_LEVEL = 0.3;
 
@@ -325,7 +325,7 @@
 
   const TIER_COLORS = { 1: "#5c9eff", 2: "#ffd166", 3: "#ff5f6d" };
 
-  const BRICK_SIZE = 26;  // 砖块边长（正方形）
+  const BRICK_SIZE = 30;  // 砖块边长（正方形）
 
   const BALL_COLORS = ["#ffffff", "#38d9f5", "#ffd166", "#ff5f6d", "#43e97b", "#ff7eb9"];
 
@@ -361,14 +361,28 @@
   }
 
   // 把字符串拼成满宽文字图案（居中）
+  function scaleRow(row, targetW) {
+    let out = "";
+    for (let x = 0; x < targetW; x++) {
+      out += row[Math.round(x * (row.length - 1) / (targetW - 1))];
+    }
+    return out;
+  }
+
   function textPattern(str, palette) {
     const H = 7;
     const glyphs = str.split("").map(ch => FONT[ch]);
     const { cols, rows } = gridDims();
+    const n = glyphs.length;
+    const gap = 1;
+    const cw = Math.max(2, Math.floor((cols - (n - 1) * gap) / n));
     const body = [];
     for (let y = 0; y < H; y++) {
       let line = "";
-      glyphs.forEach((g, i) => { if (i > 0) line += "."; line += g[y]; });
+      glyphs.forEach((g, i) => {
+        if (i > 0) line += ".".repeat(gap);
+        line += scaleRow(g[y], cw);
+      });
       body.push(line);
     }
     const w = body[0].length;

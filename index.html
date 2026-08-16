@@ -583,8 +583,8 @@
 
   // 道具掉落
   const DROP_CHANCE = 0.15;    // 砖块消除后掉落概率
-  const POWERUP_W = 28;
-  const POWERUP_H = 22;
+  const POWERUP_W = 36;
+  const POWERUP_H = 28;
   const POWERUP_TYPES = {
     ball: { color: "#38d9f5", label: "球", weight: 0.45 },
     life: { color: "#ff5f6d", label: "命", weight: 0.15 },
@@ -1120,7 +1120,7 @@
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.fillStyle = "#0f1220";
-      ctx.font = "bold 13px sans-serif";
+      ctx.font = "bold 16px sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(cfg.label, p.x + POWERUP_W / 2, p.y + POWERUP_H / 2 + 1);

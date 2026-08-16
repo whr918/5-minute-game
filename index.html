@@ -398,18 +398,19 @@
     return { name: str, rows: out, palette };
   }
 
+  // 满铺图案：前 fillRows 行填满，其余留空（用于控制第一关行数）
+  function fullGrid(fillRows) {
+    const { cols, rows } = gridDims();
+    const out = [];
+    for (let r = 0; r < rows; r++) {
+      out.push(r < fillRows ? "1".repeat(cols) : ".".repeat(cols));
+    }
+    return { name: "经典", rows: out };
+  }
+
   // 图案库：'.' = 空，'1'/'2'/'3' = 砖块（数字即血量）。palette 可选，按字符覆盖默认颜色。
   const PATTERNS = [
-    { name: "经典", rows: [
-      "1111111111",
-      "1111111111",
-      "1111111111",
-      "1111111111",
-      "1111111111",
-      "1111111111",
-      "1111111111",
-      "1111111111",
-    ]},
+    fullGrid(10),
     textPattern("2778", { 1: "#43e97b" }),
     { name: "字母A", rows: [
       "..111..",

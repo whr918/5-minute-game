@@ -374,8 +374,13 @@
     const glyphs = str.split("").map(ch => FONT[ch]);
     const { cols, rows } = gridDims();
     const n = glyphs.length;
-    const gap = 1;
-    const cw = Math.max(2, Math.floor((cols - (n - 1) * gap) / n));
+    // 保持 4 列宽完整字形：先压缩间距，仍放不下才缩放（避免字形残缺）
+    let gap = 1;
+    while (gap > 0 && n * 4 + (n - 1) * gap > cols) gap--;
+    let cw = 4;
+    if (n * 4 + (n - 1) * gap > cols) {
+      cw = Math.max(2, Math.floor((cols - (n - 1) * gap) / n));
+    }
     const body = [];
     for (let y = 0; y < H; y++) {
       let line = "";
